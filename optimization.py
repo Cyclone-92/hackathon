@@ -31,10 +31,10 @@ def calculate_propotion_of_production_needed_for_consumption():
     print(f"Extra supply needed: {delta}")
     proportion = round(consumption / production, 2)
 
-    return proportion, delta
+    return proportion, delta, consumption, production
 
 
-#print(calculate_propotion_of_production_needed_for_consumption())
+# print(calculate_propotion_of_production_needed_for_consumption())
 
 
 def set_production_allocations(consumption, grid, storage):
@@ -46,7 +46,7 @@ def set_production_allocations(consumption, grid, storage):
     response = requests.post(url, json=data)
 
     if response.status_code == 200:
-        #print("Request was successful.")
+        # print("Request was successful.")
         print(f"production allocations were adjusted to: consumption {consumption}, grid: {grid}, storage: {storage}")
         return data
     else:
@@ -67,13 +67,18 @@ def set_storage_allocations(cons, grid):
     response = requests.post(url, json=data)
 
     if response.status_code == 200:
-        #print("Request was successful.")
+        # print("Request was successful.")
         print(f"storage allocations:{data}")
     else:
         print(f"Request failed with status code {response.status_code}.")
 
+
+total_kwH_covered = 0
+
+
 def adjust_energy_allocations():
-    proportion, delta = calculate_propotion_of_production_needed_for_consumption()
+    global total_kwH_covered
+    proportion, delta, consumption, production = calculate_propotion_of_production_needed_for_consumption()
     storage_charge = get_storage_charge()
     print(f"Proportion of consumption/production: {proportion}")
     print(f"Storage charge: {storage_charge}")
@@ -81,7 +86,9 @@ def adjust_energy_allocations():
     if proportion <= 1:
         # consumption is lower than production
         # no need to feed from storage, so set it to 0,0
-        set_storage_allocations(0,0)
+        total_kwH_covered += (consumption * proportion)
+
+        set_storage_allocations(0, 0)
         if storage_charge < 250:
             # there is space in storage
             # use all production needed for consumption and send the rest to the storage
@@ -91,12 +98,19 @@ def adjust_energy_allocations():
             # use all production for consumption and send rest to grid because storage is full
             set_production_allocations(proportion, 1 - proportion, 0)
     else:
+        total_kwH_covered += production
+        print(total_kwH_covered)
         # production is lower than consumption
         # use all of production for consumption
-        set_production_allocations(1,0,0)
+        set_production_allocations(1, 0, 0)
         # if there is storage feed all of the storage to the consumption
         if storage_charge != 0:
-            set_storage_allocations(1,0)
+            set_storage_allocations(1, 0)
+            # if there is more storage charge than delta between production and consumption add delta to total_kwH_covered
+            if storage_charge > delta:
+                total_kwH_covered += delta
+            else:
+                # if there is less or equal storage_charge to delta, then add storage charge amount to total_kwH_covered
+                total_kwH_covered += storage_charge
         else:
-            set_storage_allocations(0,0)
-
+            set_storage_allocations(0, 0)
