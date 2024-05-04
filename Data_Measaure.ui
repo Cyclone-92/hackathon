@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1650</width>
+    <width>1655</width>
     <height>1181</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
      <string>Building ID</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="ID">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -46,6 +46,12 @@
       <height>17</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string>Measurements</string>
     </property>
@@ -55,7 +61,7 @@
      <rect>
       <x>50</x>
       <y>190</y>
-      <width>161</width>
+      <width>151</width>
       <height>17</height>
      </rect>
     </property>
@@ -123,6 +129,12 @@
       <width>171</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>streams</string>
@@ -224,12 +236,15 @@
      <rect>
       <x>220</x>
       <y>190</y>
-      <width>112</width>
+      <width>15</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="icon">
+     <iconset theme="battery"/>
     </property>
    </widget>
    <widget class="QRadioButton" name="MC1">
@@ -237,12 +252,15 @@
      <rect>
       <x>220</x>
       <y>240</y>
-      <width>112</width>
+      <width>15</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="icon">
+     <iconset theme="battery"/>
     </property>
    </widget>
    <widget class="QRadioButton" name="MG1">
@@ -250,12 +268,15 @@
      <rect>
       <x>220</x>
       <y>280</y>
-      <width>112</width>
+      <width>15</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="icon">
+     <iconset theme="battery"/>
     </property>
    </widget>
    <widget class="QRadioButton" name="MP1">
@@ -263,12 +284,15 @@
      <rect>
       <x>220</x>
       <y>320</y>
-      <width>112</width>
+      <width>15</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="icon">
+     <iconset theme="battery"/>
     </property>
    </widget>
    <widget class="QRadioButton" name="MS1">
@@ -276,12 +300,15 @@
      <rect>
       <x>220</x>
       <y>360</y>
-      <width>112</width>
+      <width>15</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="icon">
+     <iconset theme="battery"/>
     </property>
    </widget>
    <widget class="QRadioButton" name="SA1">
@@ -362,10 +389,10 @@
    <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>790</x>
-      <y>810</y>
-      <width>741</width>
-      <height>121</height>
+      <x>780</x>
+      <y>720</y>
+      <width>751</width>
+      <height>331</height>
      </rect>
     </property>
    </widget>
@@ -442,6 +469,12 @@
       <width>171</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Allocations</string>
@@ -558,8 +591,8 @@
    <widget class="QLabel" name="label_20">
     <property name="geometry">
      <rect>
-      <x>1110</x>
-      <y>740</y>
+      <x>1120</x>
+      <y>670</y>
       <width>71</width>
       <height>17</height>
      </rect>
@@ -610,8 +643,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1650</width>
-     <height>22</height>
+     <width>1655</width>
+     <height>19</height>
     </rect>
    </property>
   </widget>
