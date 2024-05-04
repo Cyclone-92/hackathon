@@ -14,6 +14,10 @@ class LogicThread(QThread):
         super().__init__(parent)
         self.base_url = "https://hackathon.kvanttori.fi"
         self.id = ""
+        self.break_signal = False
+
+    def _break_signal(self):
+        self.break_signal = True
 
     def get_consumption(self):
         url = f'{self.base_url}/buildings/{self.id}/measurements'
@@ -77,7 +81,7 @@ class LogicThread(QThread):
             self.set_production_allocations(1, 0, 0)
 
     def run(self):
-        while True:
+        while (not self.break_signal):
             self.adjust_energy_allocations()
 
 

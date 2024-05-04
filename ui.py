@@ -10,6 +10,9 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import requests
 import json
 from logic_thread import LogicThread
+import matplotlib.dates as mdates
+import pandas as pd
+from datetime import datetime
 
 class PlotCanvas(FigureCanvas):
     def __init__(self, parent=None, width=3, height=3, dpi=100):
@@ -21,6 +24,7 @@ class PlotCanvas(FigureCanvas):
 class GetMethod(QThread):
 
     plot_update  = Signal(list,list,str,int)
+    plot_invalid_name = Signal(bool)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -28,8 +32,11 @@ class GetMethod(QThread):
         self.type = ""
         self.message = ""
         self.ID = ""
-        self.Databuffer = 100
+        self.Databuffer = 10
         self.exit_flag = False
+
+    def _adjustbuffer(self,msg):
+        self.Databuffer = msg
 
     def start_visuals(self):
         self.exit_flag = False
@@ -41,9 +48,12 @@ class GetMethod(QThread):
     def run(self):
         print("Starting the thread")
         # while True:
-        self._get_method(self.type , self.end_point, self.message, self.ID)  # Call  
+        try:
+            self._get_method(self.type , self.end_point, self.message, self.ID)  # Call
+        except Exception as e:
+            print(e)
+            self.emnit_invalid_name(True)
         print("end of thread")
-
 
 
     def _get_method(self, type, end_point, message, ID):
@@ -334,8 +344,7 @@ class GetMethod(QThread):
                         print(f"Prinitnig json: {line_as_json}")
                         x.append(line_as_json["to_consumption"]['timestamp'])
                         y.append(line_as_json["to_consumption"]['value'])
-
-                        if (len(x)>5):
+                        if (len(x)>10):
                             x.pop(0)
                             y.pop(0)
                         self.emit_plot_update(x,y,self.type ,0)
@@ -355,8 +364,7 @@ class GetMethod(QThread):
                         print(line_as_json)
                         x.append(line_as_json["to_grid"]['timestamp'])
                         y.append(line_as_json["to_grid"]['value'])
-
-                        if (len(x)>1):
+                        if (len(x)>10):
                             x.pop(0)
                             y.pop(0)
                         self.emit_plot_update(x,y,self.type ,0)
@@ -364,6 +372,9 @@ class GetMethod(QThread):
 
     def emit_plot_update(self, time,value, type,buffer):
         self.plot_update.emit(time,value, type,buffer)  # Emit the progress value
+
+    def emnit_invalid_name(self,value):
+        self.plot_invalid_name.emit(value)
 
 # ------------------------------------------------------------------------------------------------------
 
@@ -391,7 +402,9 @@ class hackathon(QtWidgets.QWidget):
         self.gridallocation = self.window.PG1
         self.productionallocation = self.window.PP1
         self.storageallocation = self.window.PS1
-        self.activatesmartallocation = self.window.ASA
+        self.activatesmartallocation = self.window.checkBox
+        self.items_no = self.window.comboBox_2
+        self.buildid = self.window.ID
 
         # self.comboBox.activated.connect(self._on_combo)
         self.stream_consumption.toggled.connect(self._stream_consumption)
@@ -406,7 +419,9 @@ class hackathon(QtWidgets.QWidget):
         self.start_visuals.clicked.connect(self._start_visuals)
         self.end_visuals.clicked.connect(self._end_visuals)
         self.stream_storage.toggled.connect(self._stream_storage)
-        self.activatesmartallocation.toggled.connect(self._activatesmartallocation)
+        self.activatesmartallocation.stateChanged.connect(self._activatesmartallocation)
+        self.items_no.activated.connect(self._items_no)
+        self.buildid.textChanged.connect(self._ID_text)
         # Create a Matplotlib plot canvas
         self.canvas = PlotCanvas()
         self.layout = QtWidgets.QVBoxLayout(self.graphicview)
@@ -414,84 +429,118 @@ class hackathon(QtWidgets.QWidget):
         # Initiate the threads
         self.Getmethod = GetMethod()
         self.logic_thread = LogicThread()
-
         # Variables
         self.stream_counter = 0
+        self.buil_current_text =  self.buildid.text()
+        self.ID = self.buil_current_text
+
+    def _ID_text(self,msg):
+         self.ID = msg
+
+    def _invalid_name(self):
+        self._update_text("Invalide Building number")
+        
+
+    def _items_no(self):
+        value = self.items_no.itemText(self.items_no.currentIndex())
+        self.Getmethod._adjustbuffer(int(value))
 
     def _activatesmartallocation(self):
-        self.logic_thread.id = self.ID
-        self.logic_thread.data_update.connect(self._opt_values)
-        self.logic_thread.start()
+        if (self.activatesmartallocation.isChecked()):
+            self.logic_thread.id = self.ID
+            self.logic_thread.data_update.connect(self._opt_values)
+            self.logic_thread.start()
+        else:
+            self.gridallocation.setText("")
+            self.productionallocation.setText("")
+            self.storageallocation.setText("")
+            self.logic_thread.terminate()
+            self.logic_thread.wait()
 
     def _end_visuals(self):
         self.Getmethod.stop_visuals()
         self._update_text("Ending the sesion")
-        # self.canvas.fig.clear()
-        # self.canvas.draw()
         self.canvas.ax.clear()
         self.canvas.draw()
+        self.showdata.setText("" )
 
     def _start_visuals(self):
-        self.Getmethod.start_visuals()
-        if(self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option"):
-            self._update_text("Starting the sesion")
-        if(self.storage.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
-            self._update_text("Loading the Data....")
-            current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-            end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/measurements/storage"
-            self._get_method("storage+"+current_value, end_point, "", self.ID)
-        elif(self.production.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
-            self._update_text("Loading the Data....")
-            current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-            end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/measurements/production"
-            self._get_method("production+"+current_value, end_point, "", self.ID)
-        elif(self.consumption.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
-            self._update_text("Loading the Data....")
-            current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-            end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/measurements/consumption"
-            self._get_method("consumption+"+current_value, end_point, "", self.ID)
-        elif(self.grid.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
-            self._update_text("Loading the Data....")
-            current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-            end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/measurements/grid"
-            self._get_method("grid+"+current_value, end_point, "", self.ID)
-        elif(self.stream_consumption.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
-            self._update_text("Loading the Data....")
-            current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-            end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/streams/consumption"
-            self._get_method("stream_conumption+"+current_value, end_point, "", self.ID)
-        elif(self.stream_grid.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
-            self._update_text("Loading the Data....")
-            current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-            end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/streams/grid"
-            self._get_method("stream_grid+"+current_value, end_point, "", self.ID)
-        elif(self.stream_production.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
-            self._update_text("Loading the Data....")
-            current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-            end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/streams/production"
-            self._get_method("stream_production+"+current_value, end_point, "", self.ID)
-        elif(self.stream_storage.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
-            self._update_text("Loading the Data....")
-            current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-            end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/streams/storage"
-            self._get_method("stream_storage+"+current_value, end_point, "", self.ID)
+        if (self.ID == ""):
+            self._update_text("Please enter a valid building ID")
         else:
-            self._update_text("Select an option")
+            self.Getmethod.start_visuals()
+            if(self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option"):
+                self._update_text("Starting the sesion")
+            if(self.storage.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
+                self._update_text("Loading the Data....")
+                current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
+                end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/measurements/storage"
+                self._get_method("storage+"+current_value, end_point, "", self.ID)
+            elif(self.production.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
+                self._update_text("Loading the Data....")
+                current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
+                end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/measurements/production"
+                self._get_method("production+"+current_value, end_point, "", self.ID)
+            elif(self.consumption.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
+                self._update_text("Loading the Data....")
+                current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
+                end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/measurements/consumption"
+                self._get_method("consumption+"+current_value, end_point, "", self.ID)
+            elif(self.grid.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
+                self._update_text("Loading the Data....")
+                current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
+                end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/measurements/grid"
+                self._get_method("grid+"+current_value, end_point, "", self.ID)
+            elif(self.stream_consumption.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
+                self._update_text("Loading the Data....")
+                current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
+                end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/streams/consumption"
+                self._get_method("stream_conumption+"+current_value, end_point, "", self.ID)
+            elif(self.stream_grid.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
+                self._update_text("Loading the Data....")
+                current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
+                end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/streams/grid"
+                self._get_method("stream_grid+"+current_value, end_point, "", self.ID)
+            elif(self.stream_production.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
+                self._update_text("Loading the Data....")
+                current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
+                end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/streams/production"
+                self._get_method("stream_production+"+current_value, end_point, "", self.ID)
+            elif(self.stream_storage.isChecked() and (self.comboBox.itemText(self.comboBox.currentIndex()) != "select a option")):
+                self._update_text("Loading the Data....")
+                current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
+                end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/streams/storage"
+                self._get_method("stream_storage+"+current_value, end_point, "", self.ID)
+            else:
+                self._update_text("Select an option")
 
-    # def _showdata(self,mssg):
-    #     self.showdata.setText(mssg)
 
     def plot_graph(self,x,y,title):
         # Generate example data
         ax = self.canvas.ax
-        # ax.clear()
+        ax.clear()
         ax.plot(x, y)
         ax.set_title(title)
         ax.set_xlabel('Time')
         ax.set_ylabel('Kw')
-        ax.tick_params(axis='x', rotation=90)
+        tick_spacing = 4  # Adjust as needed
+        ax.set_xticks(np.arange(0, len(x), tick_spacing))                                                                               
+        ax.tick_params(axis='x', rotation=0 , labelsize=8)
         self.canvas.draw()
         self._update_text("Loaded Successfully")
+        self.status_review(x,y)
+
+    def status_review(self,x,y):
+        df = pd.DataFrame({'time': x, 'energy': y})
+        off_peak = pd.to_datetime(df["time"][df["energy"] < df["energy"].mean()])
+        off_peak_hours = np.unique(off_peak.dt.hour)
+        peak = pd.to_datetime(df["time"][df["energy"] > df["energy"].mean()])
+        peak_hours = np.unique(peak.dt.hour)
+        df.to_csv("my.csv")
+        average = df["energy"].mean()
+        max = np.max(df["energy"])
+        min = np.min(df["energy"])
+        self.showdata.setText(f" Average Kw is {round(average,2)} \n max Kw is {round(max,2)} \n minimum Kw is {round(min,2)} \n peak hours {peak_hours} \n off peak {off_peak_hours}" )
 
     def _opt_values(self,consumption, grid, storage):
         print(consumption, grid, storage)
@@ -538,7 +587,7 @@ class hackathon(QtWidgets.QWidget):
     
     def _stream_storage(self):
         self.comboBox.clear()
-        self.comboBox.addItems(["select a option","capacity","charge","to_consumption","to_grid"])
+        self.comboBox.addItems(["select a option","charge","to_consumption","to_grid"])
         self._update_text("select a option in what to visualize")
 
     def _update_text(self, mssg):
@@ -550,6 +599,7 @@ class hackathon(QtWidgets.QWidget):
         self.Getmethod.end_point = end_point
         self.Getmethod.message = message
         self.Getmethod.plot_update.connect(self.plot_graph)
+        self.Getmethod.plot_invalid_name.connect(self._invalid_name)
         self.Getmethod.start()
 
 if __name__ == "__main__":
