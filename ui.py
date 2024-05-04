@@ -9,12 +9,14 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import requests
 import json
+from logic_thread import LogicThread
 
 class PlotCanvas(FigureCanvas):
     def __init__(self, parent=None, width=3, height=3, dpi=100):
         self.fig = Figure(figsize=(width, height), dpi=dpi)
         self.ax = self.fig.add_subplot(111)
         super().__init__(self.fig)
+
 
 class GetMethod(QThread):
 
@@ -26,8 +28,8 @@ class GetMethod(QThread):
         self.type = ""
         self.message = ""
         self.ID = ""
-        self.Databuffer = 1000
-        self.exit_flag = ""
+        self.Databuffer = 100
+        self.exit_flag = False
 
     def start_visuals(self):
         self.exit_flag = False
@@ -38,8 +40,8 @@ class GetMethod(QThread):
 
     def run(self):
         print("Starting the thread")
-        while True:
-            self._get_method(self.type , self.end_point, self.message, self.ID)  # Call  
+        # while True:
+        self._get_method(self.type , self.end_point, self.message, self.ID)  # Call  
         print("end of thread")
 
 
@@ -131,7 +133,7 @@ class GetMethod(QThread):
             x = list()
             y = list()
             for line in response.iter_lines():
-                print(f"Im inside of stream flag is {self.exit_flag}")
+                print(f"Im inside of stream_conumption+consumption {self.exit_flag}")
                 if (self.exit_flag == True):
                     break
                 elif (self.exit_flag == False):
@@ -145,10 +147,11 @@ class GetMethod(QThread):
                         if (len(x)>10):
                             x.pop(0)
                             y.pop(0)
+                        print(x.append,y.append)
                         self.emit_plot_update(x,y,self.type ,0)
-            self.exit_flag == False
+            # self.exit_flag = False
         elif type == "stream_grid+to_consumption":
-            print(f"Im inside of stream flag is {self.exit_flag}")
+            print(f"Im inside of stream_grid+to_consumption {self.exit_flag}")
             response = requests.get(end_point, stream=True)
             print(end_point,response)
             x = list()
@@ -175,7 +178,7 @@ class GetMethod(QThread):
             x = list()
             y = list()
             for line in response.iter_lines():
-                print(f"Im inside of stream flag is {self.exit_flag}")
+                print(f"Im inside of stream_grid+to_storage {self.exit_flag}")
                 if (self.exit_flag == True):
                     break
                 elif (self.exit_flag == False):
@@ -196,7 +199,7 @@ class GetMethod(QThread):
             x = list()
             y = list()
             for line in response.iter_lines():
-                print(f"Im inside of stream flag is {self.exit_flag}")
+                print(f"Im inside of stream_grid+to_storage {self.exit_flag}")
                 if (self.exit_flag == True):
                     break
                 elif (self.exit_flag == False):
@@ -217,7 +220,7 @@ class GetMethod(QThread):
             x = list()
             y = list()
             for line in response.iter_lines():
-                print(f"Im inside of stream flag is {self.exit_flag}")
+                print(f"Im inside of stream_production+to_consumption {self.exit_flag}")
                 if (self.exit_flag == True):
                     break
                 elif (self.exit_flag == False):
@@ -238,7 +241,7 @@ class GetMethod(QThread):
             x = list()
             y = list()
             for line in response.iter_lines():
-                print(f"Im inside of stream flag is {self.exit_flag}")
+                print(f"Im inside of stream_production+to_grid {self.exit_flag}")
                 if (self.exit_flag == True):
                     break
                 elif (self.exit_flag == False):
@@ -259,7 +262,7 @@ class GetMethod(QThread):
                 x = list()
                 y = list()
                 for line in response.iter_lines():
-                    print(f"Im inside of stream flag is {self.exit_flag}")
+                    print(f"Im inside of stream_production+to_storage {self.exit_flag}")
                     if (self.exit_flag == True):
                         break
                     elif (self.exit_flag == False):
@@ -280,7 +283,7 @@ class GetMethod(QThread):
             x = list()
             y = list()
             for line in response.iter_lines():
-                print(f"Im inside of stream flag is {self.exit_flag}")
+                print(f"Im inside of stream_storage+capacity {self.exit_flag}")
                 if (self.exit_flag == True):
                     break
                 elif (self.exit_flag == False):
@@ -300,7 +303,7 @@ class GetMethod(QThread):
             x = list()
             y = list()
             for line in response.iter_lines():
-                print(f"Im inside of stream flag is {self.exit_flag}")
+                print(f"Im inside of stream_storage+charge {self.exit_flag}")
                 if (self.exit_flag == True):
                     break
                 elif (self.exit_flag == False):
@@ -321,18 +324,18 @@ class GetMethod(QThread):
             x = list()
             y = list()
             for line in response.iter_lines():
-                print(f"Im inside of stream flag is {self.exit_flag}")
+                print(f"Im inside of stream_storage+to_consumption {self.exit_flag}")
                 if (self.exit_flag == True):
                     break
                 elif (self.exit_flag == False):
                     if line:
                     #     response = line.decode('utf-8')
                         line_as_json = json.loads(line)
-                        print(line_as_json)
+                        print(f"Prinitnig json: {line_as_json}")
                         x.append(line_as_json["to_consumption"]['timestamp'])
                         y.append(line_as_json["to_consumption"]['value'])
 
-                        if (len(x)>10):
+                        if (len(x)>5):
                             x.pop(0)
                             y.pop(0)
                         self.emit_plot_update(x,y,self.type ,0)
@@ -342,7 +345,7 @@ class GetMethod(QThread):
             x = list()
             y = list()
             for line in response.iter_lines():
-                print(f"Im inside of stream flag is {self.exit_flag}")
+                print(f"Im inside of stream_storage+to_grid {self.exit_flag}")
                 if (self.exit_flag == True):
                     break
                 elif (self.exit_flag == False):
@@ -353,7 +356,7 @@ class GetMethod(QThread):
                         x.append(line_as_json["to_grid"]['timestamp'])
                         y.append(line_as_json["to_grid"]['value'])
 
-                        if (len(x)>10):
+                        if (len(x)>1):
                             x.pop(0)
                             y.pop(0)
                         self.emit_plot_update(x,y,self.type ,0)
@@ -385,8 +388,12 @@ class hackathon(QtWidgets.QWidget):
         self.start_visuals = self.window.start_visuals
         self.end_visuals = self.window.stop_visuals
         self.showdatabutton = self.window.showdatabutton
+        self.gridallocation = self.window.PG1
+        self.productionallocation = self.window.PP1
+        self.storageallocation = self.window.PS1
+        self.activatesmartallocation = self.window.ASA
 
-        self.comboBox.activated.connect(self._on_combo)
+        # self.comboBox.activated.connect(self._on_combo)
         self.stream_consumption.toggled.connect(self._stream_consumption)
         self.consumption.toggled.connect(self._consumption)
         self.production.toggled.connect(self._production)
@@ -399,20 +406,30 @@ class hackathon(QtWidgets.QWidget):
         self.start_visuals.clicked.connect(self._start_visuals)
         self.end_visuals.clicked.connect(self._end_visuals)
         self.stream_storage.toggled.connect(self._stream_storage)
+        self.activatesmartallocation.toggled.connect(self._activatesmartallocation)
         # Create a Matplotlib plot canvas
         self.canvas = PlotCanvas()
         self.layout = QtWidgets.QVBoxLayout(self.graphicview)
         self.layout.addWidget(self.canvas)
         # Initiate the threads
         self.Getmethod = GetMethod()
+        self.logic_thread = LogicThread()
+
         # Variables
         self.stream_counter = 0
+
+    def _activatesmartallocation(self):
+        self.logic_thread.id = self.ID
+        self.logic_thread.data_update.connect(self._opt_values)
+        self.logic_thread.start()
 
     def _end_visuals(self):
         self.Getmethod.stop_visuals()
         self._update_text("Ending the sesion")
-        ax = self.canvas.ax
-        ax.clear()
+        # self.canvas.fig.clear()
+        # self.canvas.draw()
+        self.canvas.ax.clear()
+        self.canvas.draw()
 
     def _start_visuals(self):
         self.Getmethod.start_visuals()
@@ -461,13 +478,13 @@ class hackathon(QtWidgets.QWidget):
         else:
             self._update_text("Select an option")
 
-    def _showdata(self,mssg):
-        self.showdata.setText(mssg)
+    # def _showdata(self,mssg):
+    #     self.showdata.setText(mssg)
 
     def plot_graph(self,x,y,title):
         # Generate example data
         ax = self.canvas.ax
-        ax.clear()
+        # ax.clear()
         ax.plot(x, y)
         ax.set_title(title)
         ax.set_xlabel('Time')
@@ -476,44 +493,11 @@ class hackathon(QtWidgets.QWidget):
         self.canvas.draw()
         self._update_text("Loaded Successfully")
 
-
-    def _on_combo(self):
-        pass
-        # if(self.storage.isChecked()):
-        #     self._update_text("Loading the Data....")
-        #     current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-        #     end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/measurements/storage"
-        #     self._get_method("storage+"+current_value, end_point, "", self.ID)
-        # elif(self.production.isChecked()):
-        #     self._update_text("Loading the Data....")
-        #     current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-        #     end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/measurements/production"
-        #     self._get_method("production+"+current_value, end_point, "", self.ID)
-        # elif(self.consumption.isChecked()):
-        #     self._update_text("Loading the Data....")
-        #     current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-        #     end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/measurements/consumption"
-        #     self._get_method("consumption+"+current_value, end_point, "", self.ID)
-        # elif(self.grid.isChecked()):
-        #     self._update_text("Loading the Data....")
-        #     current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-        #     end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/measurements/grid"
-        #     self._get_method("grid+"+current_value, end_point, "", self.ID)
-        # elif(self.stream_consumption.isChecked()):
-        #     self._update_text("Loading the Data....")
-        #     current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-        #     end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/streams/consumption"
-        #     self._get_method("stream_conumption+"+current_value, end_point, "", self.ID)
-        # elif(self.stream_grid.isChecked()):
-        #     self._update_text("Loading the Data....")
-        #     current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-        #     end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/streams/grid"
-        #     self._get_method("stream_grid+"+current_value, end_point, "", self.ID)
-        # elif(self.stream_production.isChecked()):
-        #     self._update_text("Loading the Data....")
-        #     current_value = self.comboBox.itemText(self.comboBox.currentIndex()) 
-        #     end_point = f"https://hackathon.kvanttori.fi/buildings/{self.ID}/streams/grid"
-        #     self._get_method("stream_production+"+current_value, end_point, "", self.ID)
+    def _opt_values(self,consumption, grid, storage):
+        print(consumption, grid, storage)
+        self.gridallocation.setText(str(consumption))
+        self.productionallocation.setText(str(grid))
+        self.storageallocation.setText(str(storage))
 
     def _production(self):
         self.comboBox.clear()

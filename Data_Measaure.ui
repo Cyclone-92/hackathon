@@ -402,9 +402,14 @@
      <rect>
       <x>430</x>
       <y>600</y>
-      <width>112</width>
+      <width>110</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>44</pointsize>
+     </font>
     </property>
     <property name="text">
      <string/>
@@ -432,8 +437,19 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>23</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>29</width>
+      <height>24</height>
+     </size>
     </property>
    </widget>
    <widget class="QGraphicsView" name="graphicsView">
@@ -532,7 +548,7 @@
      <rect>
       <x>50</x>
       <y>790</y>
-      <width>201</width>
+      <width>321</width>
       <height>17</height>
      </rect>
     </property>
@@ -542,10 +558,10 @@
      </font>
     </property>
     <property name="text">
-     <string>Get allocation</string>
+     <string>Activate Smart Allocation</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="AG1">
+   <widget class="QRadioButton" name="ASA">
     <property name="geometry">
      <rect>
       <x>430</x>
@@ -573,7 +589,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Post  Grid allocation</string>
+     <string>Post  Consumption allocation</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="PG1">
@@ -611,7 +627,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Post  Production allocation</string>
+     <string>Post  Grid allocation</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_19">
