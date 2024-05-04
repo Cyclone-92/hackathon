@@ -51,16 +51,36 @@ def get_time_weather_consumption():
     value = consumption.json()['consumption'][0]
     print(time, weather, value)
 
-def stream_consumption_data(url):
-    response = requests.get(url, stream=True)
+def stream_consumption_data():
+    response = requests.get(f'https://hackathon.kvanttori.fi/buildings/{id}/streams/consumption', stream=True)
 
     for line in response.iter_lines():
         if line:
             decoded_line = line.decode('utf-8')
             print(decoded_line)
-            
-# TODO change the URL to use the id variable
+  
+# Post allocations
+
+def set_production_allocations(consumption, grid, storage):
+    url = f'https://hackathon.kvanttori.fi/buildings/{id}/allocations/production_allocation'
+    data = {"to_consumption": consumption,
+            "to_grid": grid,
+            "to_storage": storage}
+    
+    response = requests.post(url, json=data)
+    
+    if response.status_code == 200:
+        print("Request was successful.")
+    else:
+        print(f"Request failed with status code {response.status_code}.")
+        
+    
+
 #stream_consumption_data('https://hackathon.kvanttori.fi/buildings/6cd466d8-9802-413c-b173-65b81d62ceee/streams/consumption')
-while True:
+
+# You can print a stream of time-weather-consumption like this
+""" while True:
     get_time_weather_consumption()
-    t.sleep(2)
+    t.sleep(2) """
+    
+variable = set_production_allocations(1, 0, 0)
