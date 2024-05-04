@@ -21,6 +21,13 @@ def get_consumption(start, end):
     response = requests.get(url, params=parameters, timeout=30)
     return response
 
+# Get storage charge
+
+def get_storage_charge():
+    url = f'https://hackathon.kvanttori.fi/buildings/{id}/measurements/storage'
+    response = requests.get(url).json()
+    return response['charge'][-1]['value']
+
 # Streams
 
 def get_system_time_stream():
@@ -105,3 +112,4 @@ def set_storage_allocations(cons, grid):
 """ while True:
     get_time_weather_consumption()
     t.sleep(2) """
+get_storage_charge()
