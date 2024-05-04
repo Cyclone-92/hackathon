@@ -20,6 +20,7 @@
         08. Status will shown here (10).
         09. Analysis of the current feed is updated here (11)
         10. Activate the intelligent allocation system (6)
+        11. Building ID created for this, available in ID.txt
 
 ## Examples
 ![Screenshot from 2024-05-05 01-33-21](https://github.com/Cyclone-92/hackathon/assets/139208208/d5eb0143-10d2-4603-a900-993b2f84b8fc)
