@@ -24,3 +24,11 @@
 ## Examples
 ![Screenshot from 2024-05-05 01-33-21](https://github.com/Cyclone-92/hackathon/assets/139208208/d5eb0143-10d2-4603-a900-993b2f84b8fc)
 ![Screenshot from 2024-05-05 01-28-36](https://github.com/Cyclone-92/hackathon/assets/139208208/f77e6651-0b60-4dac-888c-1f52dcb5ad56)
+
+## Features
+1. Real-time data visualization.
+2. span across almost all the endpoints.
+3. status updater.
+4. real-time data analysation - peak, off-peak hours detector.
+5. smart allocation algorithm.
+   
