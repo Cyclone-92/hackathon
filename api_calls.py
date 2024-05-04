@@ -74,6 +74,29 @@ def set_production_allocations(consumption, grid, storage):
     else:
         print(f"Request failed with status code {response.status_code}.")
         
+def set_grid_allocations(value):
+    url = f'https://hackathon.kvanttori.fi/buildings/{id}/allocations/grid_allocation'
+    data = {"to_storage": value}
+    
+    response = requests.post(url, json=data)
+    
+    if response.status_code == 200:
+        print("Request was successful.")
+    else:
+        print(f"Request failed with status code {response.status_code}.")
+        
+def set_storage_allocations(cons, grid):
+    url = f'https://hackathon.kvanttori.fi/buildings/{id}/allocations/storage_allocation'
+    data = {"to_consumption": cons,
+            "to_grid": grid}
+    
+    response = requests.post(url, json=data)
+    
+    if response.status_code == 200:
+        print("Request was successful.")
+    else:
+        print(f"Request failed with status code {response.status_code}.")
+        
     
 
 #stream_consumption_data('https://hackathon.kvanttori.fi/buildings/6cd466d8-9802-413c-b173-65b81d62ceee/streams/consumption')
@@ -82,5 +105,3 @@ def set_production_allocations(consumption, grid, storage):
 """ while True:
     get_time_weather_consumption()
     t.sleep(2) """
-    
-variable = set_production_allocations(1, 0, 0)
