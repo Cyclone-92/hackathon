@@ -24,7 +24,10 @@ def get_production():
 
 def calculate_propotion_of_production_needed_for_consumption():
     consumption = get_consumption()
+    print(f"needed consumption: {consumption}")
     production = get_production()
+    print(f"supplyable production: {production}")
+    print(f"delta: {consumption-production}")
     proportion = round(consumption / production, 2)
     return proportion
 
@@ -41,7 +44,7 @@ def set_production_allocations(consumption, grid, storage):
     response = requests.post(url, json=data)
 
     if response.status_code == 200:
-        print("Request was successful.")
+        #print("Request was successful.")
         print(f"production allocations were adjusted to: consumption {consumption}, grid: {grid}, storage: {storage}")
         return data
     else:
@@ -62,7 +65,8 @@ def set_storage_allocations(cons, grid):
     response = requests.post(url, json=data)
 
     if response.status_code == 200:
-        print("Request was successful.")
+        #print("Request was successful.")
+        print(f"storage allocations:{data}")
     else:
         print(f"Request failed with status code {response.status_code}.")
 
@@ -87,6 +91,8 @@ def adjust_energy_allocations():
         # production is lower than consumption
         # use all of production for consumption
         set_production_allocations(1,0,0)
-        # feed all of the storage to the consumption
-        set_storage_allocations(1,0)
+        # if there is storage feed all of the storage to the consumption
+        if storage_charge != 0:
+            set_storage_allocations(1,0)
+        else: set_storage_allocations(0,0)
 
