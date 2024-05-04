@@ -65,6 +65,14 @@ def stream_consumption_data():
         if line:
             decoded_line = line.decode('utf-8')
             print(decoded_line)
+            
+def get_grid_streams():
+    response = requests.get(f'https://hackathon.kvanttori.fi/buildings/{id}/streams/grid', stream=True)
+
+    for line in response.iter_lines():
+        if line:
+            decoded_line = line.decode('utf-8')
+            print(decoded_line)
   
 # Post allocations
 
@@ -102,9 +110,7 @@ def set_storage_allocations(cons, grid):
     if response.status_code == 200:
         print("Request was successful.")
     else:
-        print(f"Request failed with status code {response.status_code}.")
-        
-    
+        print(f"Request failed with status code {response.status_code}.") 
 
 #stream_consumption_data('https://hackathon.kvanttori.fi/buildings/6cd466d8-9802-413c-b173-65b81d62ceee/streams/consumption')
 
@@ -112,4 +118,3 @@ def set_storage_allocations(cons, grid):
 """ while True:
     get_time_weather_consumption()
     t.sleep(2) """
-get_storage_charge()

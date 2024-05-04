@@ -53,6 +53,19 @@ def get_storage_charge():
     response = requests.get(url).json()
     return response['charge'][-1]['value']
 
+
+def set_storage_allocations(cons, grid):
+    url = f'https://hackathon.kvanttori.fi/buildings/{id}/allocations/storage_allocation'
+    data = {"to_consumption": cons,
+            "to_grid": grid}
+
+    response = requests.post(url, json=data)
+
+    if response.status_code == 200:
+        print("Request was successful.")
+    else:
+        print(f"Request failed with status code {response.status_code}.")
+
 def adjust_energy_allocations():
     proportion = calculate_propotion_of_production_needed_for_consumption()
     storage_charge = get_storage_charge()
@@ -60,6 +73,8 @@ def adjust_energy_allocations():
     print(f"Storage charge: {storage_charge}")
     if proportion <= 1:
         # consumption is lower than production
+        # no need to feed from storage, so set it to 0,0
+        set_storage_allocations(0,0)
         if storage_charge < 250:
             # there is space in storage
             # use all production needed for consumption and send the rest to the storage
@@ -70,5 +85,8 @@ def adjust_energy_allocations():
             set_production_allocations(proportion, 1 - proportion, 0)
     else:
         # production is lower than consumption
+        # use all of production for consumption
         set_production_allocations(1,0,0)
+        # feed all of the storage to the consumption
+        set_storage_allocations(1,0)
 
