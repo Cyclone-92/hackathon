@@ -20,8 +20,13 @@
       <x>50</x>
       <y>70</y>
       <width>151</width>
-      <height>17</height>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Building ID</string>
@@ -30,7 +35,7 @@
    <widget class="QLineEdit" name="ID">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>200</x>
       <y>70</y>
       <width>191</width>
       <height>25</height>
@@ -43,13 +48,13 @@
       <x>50</x>
       <y>140</y>
       <width>201</width>
-      <height>17</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
-      <bold>true</bold>
+      <pointsize>22</pointsize>
+      <bold>false</bold>
      </font>
     </property>
     <property name="text">
@@ -60,10 +65,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>190</y>
-      <width>151</width>
+      <y>210</y>
+      <width>211</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>All messurments</string>
@@ -73,10 +83,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>240</y>
-      <width>91</width>
+      <y>260</y>
+      <width>171</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Consumption</string>
@@ -86,10 +101,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>280</y>
+      <y>300</y>
       <width>67</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Grid</string>
@@ -99,10 +119,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>320</y>
+      <y>340</y>
       <width>101</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Production</string>
@@ -112,10 +137,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>360</y>
-      <width>67</width>
-      <height>17</height>
+      <y>380</y>
+      <width>131</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Storage</string>
@@ -125,15 +155,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>410</y>
+      <y>430</y>
       <width>171</width>
-      <height>17</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
-      <bold>true</bold>
+      <pointsize>22</pointsize>
+      <bold>false</bold>
      </font>
     </property>
     <property name="text">
@@ -144,7 +174,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>170</y>
+      <y>190</y>
       <width>521</width>
       <height>16</height>
      </rect>
@@ -157,7 +187,7 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>440</y>
+      <y>460</y>
       <width>521</width>
       <height>16</height>
      </rect>
@@ -170,10 +200,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>570</y>
+      <y>590</y>
       <width>67</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Grid</string>
@@ -183,10 +218,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>610</y>
-      <width>101</width>
+      <y>630</y>
+      <width>151</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Production</string>
@@ -196,10 +236,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>650</y>
-      <width>67</width>
-      <height>17</height>
+      <y>660</y>
+      <width>121</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Storage</string>
@@ -209,10 +254,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>480</y>
-      <width>161</width>
+      <y>500</y>
+      <width>201</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>All messurments</string>
@@ -222,10 +272,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>530</y>
-      <width>91</width>
+      <y>550</y>
+      <width>181</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Consumption</string>
@@ -234,8 +289,8 @@
    <widget class="QRadioButton" name="MA1">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>190</y>
+      <x>430</x>
+      <y>210</y>
       <width>15</width>
       <height>23</height>
      </rect>
@@ -244,14 +299,15 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset theme="battery"/>
+     <iconset theme="battery">
+      <normaloff>../../../../.designer/backup</normaloff>../../../../.designer/backup</iconset>
     </property>
    </widget>
    <widget class="QRadioButton" name="MC1">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>240</y>
+      <x>430</x>
+      <y>260</y>
       <width>15</width>
       <height>23</height>
      </rect>
@@ -260,14 +316,15 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset theme="battery"/>
+     <iconset theme="battery">
+      <normaloff>../../../../.designer/backup</normaloff>../../../../.designer/backup</iconset>
     </property>
    </widget>
    <widget class="QRadioButton" name="MG1">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>280</y>
+      <x>430</x>
+      <y>300</y>
       <width>15</width>
       <height>23</height>
      </rect>
@@ -276,14 +333,15 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset theme="battery"/>
+     <iconset theme="battery">
+      <normaloff>../../../../.designer/backup</normaloff>../../../../.designer/backup</iconset>
     </property>
    </widget>
    <widget class="QRadioButton" name="MP1">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>320</y>
+      <x>430</x>
+      <y>340</y>
       <width>15</width>
       <height>23</height>
      </rect>
@@ -292,14 +350,15 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset theme="battery"/>
+     <iconset theme="battery">
+      <normaloff>../../../../.designer/backup</normaloff>../../../../.designer/backup</iconset>
     </property>
    </widget>
    <widget class="QRadioButton" name="MS1">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>360</y>
+      <x>430</x>
+      <y>380</y>
       <width>15</width>
       <height>23</height>
      </rect>
@@ -308,14 +367,15 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset theme="battery"/>
+     <iconset theme="battery">
+      <normaloff>../../../../.designer/backup</normaloff>../../../../.designer/backup</iconset>
     </property>
    </widget>
    <widget class="QRadioButton" name="SA1">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>480</y>
+      <x>430</x>
+      <y>500</y>
       <width>112</width>
       <height>23</height>
      </rect>
@@ -327,8 +387,8 @@
    <widget class="QRadioButton" name="SC1">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>530</y>
+      <x>430</x>
+      <y>550</y>
       <width>112</width>
       <height>23</height>
      </rect>
@@ -340,8 +400,8 @@
    <widget class="QRadioButton" name="SG1">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>580</y>
+      <x>430</x>
+      <y>600</y>
       <width>112</width>
       <height>23</height>
      </rect>
@@ -353,8 +413,8 @@
    <widget class="QRadioButton" name="SP1">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>620</y>
+      <x>430</x>
+      <y>640</y>
       <width>112</width>
       <height>23</height>
      </rect>
@@ -366,8 +426,8 @@
    <widget class="QRadioButton" name="SS1">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>660</y>
+      <x>430</x>
+      <y>680</y>
       <width>112</width>
       <height>23</height>
      </rect>
@@ -389,24 +449,11 @@
    <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>720</y>
-      <width>751</width>
-      <height>331</height>
+      <x>900</x>
+      <y>674</y>
+      <width>481</width>
+      <height>51</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_13">
-    <property name="geometry">
-     <rect>
-      <x>620</x>
-      <y>1000</y>
-      <width>67</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Start Mesuring </string>
     </property>
    </widget>
    <widget class="Line" name="line_3">
@@ -426,7 +473,7 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>390</y>
+      <y>410</y>
       <width>521</width>
       <height>16</height>
      </rect>
@@ -439,7 +486,7 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>740</y>
+      <y>760</y>
       <width>521</width>
       <height>16</height>
      </rect>
@@ -452,7 +499,7 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>690</y>
+      <y>710</y>
       <width>521</width>
       <height>16</height>
      </rect>
@@ -465,15 +512,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>710</y>
+      <y>730</y>
       <width>171</width>
-      <height>17</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
-      <bold>true</bold>
+      <pointsize>22</pointsize>
+      <bold>false</bold>
      </font>
     </property>
     <property name="text">
@@ -484,10 +531,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>770</y>
-      <width>101</width>
+      <y>790</y>
+      <width>201</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Get allocation</string>
@@ -496,24 +548,29 @@
    <widget class="QRadioButton" name="AG1">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>770</y>
+      <x>430</x>
+      <y>780</y>
       <width>112</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>RadioButton</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="label_17">
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>820</y>
-      <width>161</width>
+      <y>840</y>
+      <width>241</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Post  Grid allocation</string>
@@ -522,8 +579,8 @@
    <widget class="QLineEdit" name="PG1">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>820</y>
+      <x>430</x>
+      <y>830</y>
       <width>261</width>
       <height>25</height>
      </rect>
@@ -532,8 +589,8 @@
    <widget class="QLineEdit" name="PP1">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>860</y>
+      <x>430</x>
+      <y>870</y>
       <width>261</width>
       <height>25</height>
      </rect>
@@ -543,10 +600,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>860</y>
-      <width>211</width>
+      <y>880</y>
+      <width>311</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Post  Production allocation</string>
@@ -556,10 +618,15 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>900</y>
-      <width>211</width>
-      <height>17</height>
+      <y>920</y>
+      <width>311</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Post  Storage allocation</string>
@@ -568,8 +635,8 @@
    <widget class="QLineEdit" name="PS1">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>900</y>
+      <x>430</x>
+      <y>910</y>
       <width>261</width>
       <height>25</height>
      </rect>
@@ -578,11 +645,16 @@
    <widget class="QPushButton" name="pushpostdata">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>960</y>
-      <width>89</width>
-      <height>25</height>
+      <x>200</x>
+      <y>980</y>
+      <width>151</width>
+      <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Post Data</string>
@@ -591,11 +663,16 @@
    <widget class="QLabel" name="label_20">
     <property name="geometry">
      <rect>
-      <x>1120</x>
-      <y>670</y>
-      <width>71</width>
-      <height>17</height>
+      <x>790</x>
+      <y>680</y>
+      <width>81</width>
+      <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Status</string>
@@ -620,21 +697,77 @@
       <height>17</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>What to visualize</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="stop_visuals">
     <property name="geometry">
      <rect>
-      <x>1050</x>
-      <y>600</y>
-      <width>201</width>
-      <height>25</height>
+      <x>1230</x>
+      <y>590</y>
+      <width>141</width>
+      <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>Start Visualizinbg</string>
+     <string>Stop Visuals</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="showdata">
+    <property name="geometry">
+     <rect>
+      <x>890</x>
+      <y>760</y>
+      <width>641</width>
+      <height>201</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="showdatabutton">
+    <property name="geometry">
+     <rect>
+      <x>1160</x>
+      <y>990</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Show Data</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="start_visuals">
+    <property name="geometry">
+     <rect>
+      <x>1020</x>
+      <y>590</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Start Visuals</string>
     </property>
    </widget>
   </widget>
